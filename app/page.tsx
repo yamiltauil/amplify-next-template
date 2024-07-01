@@ -31,7 +31,7 @@ export default function App() {
 
   useEffect(() => {
     listTodos();
-  }, []);
+  }, [todos]);
 
 async  function createTodo() {
   try {
@@ -71,12 +71,12 @@ async function updateTodo(id: string) {
     <Authenticator>
    {({ signOut, user }) =>
     <main>
-      <h1>{user?.signInDetails?.loginId} 'todos</h1>
+      <h1>{user?.signInDetails?.loginId}'s todos</h1>
       <button onClick={createTodo}>+ new</button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id} onClick={() => deleteTodo(todo.id)}>{todo.content}</li>
-        ))}
+          <li key={todo.id} onClick={() => deleteTodo(todo.id)}>{todo.content} <button onClick={() => updateTodo(todo.id)}>edit task</button>
+ </li>         ))}
       </ul>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
