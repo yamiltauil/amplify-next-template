@@ -27,7 +27,7 @@ const [search, setSearch] = useState("")
      client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
     });
-    } catch (error) {
+    } catch (error:any) {
      setEr(error)
       console.log(error,2)
     }finally{
@@ -47,7 +47,7 @@ async  function createTodo() {
      await client.models.Todo.create({
       content: window.prompt("Todo content"),
     });
-  } catch (e) {
+  } catch (e:any) {
     /* handle error */
   console.log(e,1)
       setEr(e)
@@ -64,7 +64,7 @@ async function updateTodo(id: string) {
       id,
       content: window.prompt("Todo content"),
     });
-  } catch (e) {
+  } catch (e:any) {
     /* handle error */
     console.log(e,3)
     setEr(e)
@@ -89,7 +89,7 @@ const searchTasks = async (e:any) => {
     });
       setTodos(res.data)
       console.log(res.data)
-  } catch (e) {
+  } catch (e:any) {
     /* handle error */
     console.log(e,4)
         setEr(e)
@@ -108,7 +108,7 @@ const searchTasks = async (e:any) => {
    setIsLoading(true)
     try {
       await  client.models.Todo.delete({ id })
-    } catch (e) {
+    } catch (e:any) {
       /* handle error */
     setEr(e)
     }finally{
@@ -125,7 +125,7 @@ const searchTasks = async (e:any) => {
        <Heading isTruncated={true} level={1}>{user?.signInDetails?.loginId}'s todos</Heading>
          <Divider orientation='horizontal' />
           <ul >
-           <SearchField placeholder="Search"  label="Search"  onChange={searchTasks} onClear={ClearInput}/>
+           <SearchField placeholder="Search"  label="Search"  onChange={searchTasks} onClear={ClearInput} style={{backgroundColor:"white"}}/>
              {todos.map((todo) => (
               <li key={todo.id} style={{ display: "flex", flexDirection: "column", gap: "1em" }}>{todo.content} 
                <div style={{ display: "flex", flexDirection: "row", gap: "1em", justifyContent: "space-between" }}>
