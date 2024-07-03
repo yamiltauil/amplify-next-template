@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Authenticator, Button, Divider, Heading, Loader, SearchField } from '@aws-amplify/ui-react'
+import { Alert, Authenticator, Button, Divider, Flex, Heading, Loader, SearchField } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
@@ -20,6 +20,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [errr, setEr] = useState("")
 const [search, setSearch] = useState("")
+  const [category, setCategory] = useState<Array<Schema["Category"]["type"]>>()
 
    function listTodos() {
      setEr("")
@@ -43,8 +44,8 @@ const [search, setSearch] = useState("")
 async  function createTodo() {
     setEr("")
   setIsLoading(true)
-  try {
-     await client.models.Todo.create({
+  try { 
+   await client.models.Todo.create({
       content: window.prompt("Todo content"),
     });
   } catch (e:any) {
@@ -55,6 +56,17 @@ async  function createTodo() {
     listTodos()
   }
 }
+ function createCategory() {
+    try {
+      client.models.Category.create({
+        name: window.prompt("Category name"),
+        description: window.prompt("Category description"),
+      });
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 
 async function updateTodo(id: string) {
      setEr("")
@@ -116,7 +128,8 @@ const searchTasks = async (e:any) => {
     }
   }
 
-  return (
+
+   return (
     <Authenticator>
    {({ signOut, user }) =>
     <main>
@@ -124,8 +137,16 @@ const searchTasks = async (e:any) => {
       <Alert isDismissible={true} variation='error'>{errr}</Alert>}
        <Heading isTruncated={true} level={1}>{user?.signInDetails?.loginId}'s todos</Heading>
          <Divider orientation='horizontal' />
+        
+
+        
+          <SearchField placeholder="Search"  label="Search"  onChange={searchTasks} onClear={ClearInput} style={{backgroundColor:"white"}}/>
+  <Flex direction="column">
+            <Flex>
+              <Button onClick={createCategory}>+ new category</Button>
+            </Flex>
           <ul >
-           <SearchField placeholder="Search"  label="Search"  onChange={searchTasks} onClear={ClearInput} style={{backgroundColor:"white"}}/>
+
              {todos.map((todo) => (
               <li key={todo.id} style={{ display: "flex", flexDirection: "column", gap: "1em" }}>{todo.content} 
                <div style={{ display: "flex", flexDirection: "row", gap: "1em", justifyContent: "space-between" }}>
@@ -135,6 +156,7 @@ const searchTasks = async (e:any) => {
               </li> 
              ))}
            </ul>
+             </Flex>
          <button onClick={createTodo}>+ new</button>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
