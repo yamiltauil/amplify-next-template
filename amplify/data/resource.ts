@@ -7,7 +7,7 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-   MonthlyExpenses:a.model({
+   Todo:a.model({
     month:a.string(),
     hourValue:a.integer(),
     workedHours:a.integer(),
@@ -18,10 +18,10 @@ const schema = a.schema({
     totalExpenses:a.integer(),
     total:a.integer(),
     expenses:a.hasMany(
-      'Expenses','monthlyExpensesId'
+      'Expenses','todoId'
     ),
     investments:a.hasMany(
-      'Investments','monthlyExpensesId'
+      'Investments','todoId'
     )
   }).authorization(allow => [allow.owner()]),
    Expenses:a.model({
