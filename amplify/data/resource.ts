@@ -7,16 +7,36 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-   Category:a.model({
-    name:a.string(),
-    description:a.string(),
-    todos:a.hasMany("Todo",'todoId'),
+   MonthlyExpenses:a.model({
+    month:a.string(),
+    hourValue:a.integer(),
+    workedHours:a.integer(),
+    grossSalary:a.integer(),
+    freeOfExpensesCash:a.string(),
+    inflationRate:a.integer(),
+    inflationAdjustment:a.integer(),
+    totalExpenses:a.integer(),
+    total:a.integer(),
+    expenses:a.hasMany(
+      'Expenses','monthlyExpensesId'
+    ),
+    investments:a.hasMany(
+      'Investments','monthlyExpensesId'
+    )
   }).authorization(allow => [allow.owner()]),
-
-  Todo: a.model({
-    content: a.string(),
-    categoryId:a.id(),
-    category:a.belongsTo("Category",'categoryId'),
+   Expenses:a.model({
+     monthlyExpenseId: a.id(),
+    name:a.string(),
+    amount:a.integer(),
+    type:a.string(),
+    date:a.date(),
+   }).authorization(allow => [allow.owner()]),
+    Investments:a.model({
+     monthlyExpenseId: a.id(),
+    initial:a.integer(),
+    final:a.integer(),
+    registryDate:a.date(),
+    paymentDate:a.date(),
   }).authorization(allow => [allow.owner()]),
  });
 
