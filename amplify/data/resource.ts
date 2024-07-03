@@ -25,7 +25,9 @@ const schema = a.schema({
     )
   }).authorization(allow => [allow.owner()]),
    Expenses:a.model({
+
      todoId: a.id(),
+    todo:a.belongsTo('Todo','todoId'),
     name:a.string(),
     amount:a.integer(),
     type:a.string(),
@@ -33,6 +35,7 @@ const schema = a.schema({
    }).authorization(allow => [allow.owner()]),
     Investments:a.model({
      todoId: a.id(),
+        todo:a.belongsTo('Todo','todoId'),
     initial:a.integer(),
     final:a.integer(),
     registryDate:a.date(),
