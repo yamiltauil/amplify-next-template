@@ -25,14 +25,14 @@ const schema = a.schema({
     )
   }).authorization(allow => [allow.owner()]),
    Expenses:a.model({
-     monthlyExpenseId: a.id(),
+     todoId: a.id(),
     name:a.string(),
     amount:a.integer(),
     type:a.string(),
     date:a.date(),
    }).authorization(allow => [allow.owner()]),
     Investments:a.model({
-     monthlyExpenseId: a.id(),
+     todoId: a.id(),
     initial:a.integer(),
     final:a.integer(),
     registryDate:a.date(),
